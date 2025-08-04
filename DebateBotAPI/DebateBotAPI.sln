@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36301.6
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebateBotAPI.web", "DebateBotAPI.web\DebateBotAPI.web.csproj", "{54AAE25C-D1A8-4AFE-B9A5-BF0766611177}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{54AAE25C-D1A8-4AFE-B9A5-BF0766611177}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54AAE25C-D1A8-4AFE-B9A5-BF0766611177}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54AAE25C-D1A8-4AFE-B9A5-BF0766611177}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54AAE25C-D1A8-4AFE-B9A5-BF0766611177}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E358BCC0-6011-4C45-B3EC-5A7108BA03FC}
+	EndGlobalSection
+EndGlobal
