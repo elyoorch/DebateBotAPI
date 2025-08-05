@@ -1,5 +1,4 @@
-﻿using static DebateBotAPI.Models.APIModels;
-
+﻿
 namespace DebateBotAPI.web.Models
 {
     public class DebateResponse
