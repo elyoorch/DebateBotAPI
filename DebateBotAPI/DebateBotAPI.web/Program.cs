@@ -1,7 +1,7 @@
 using DebateBotAPI.web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-var apiKey = builder.Configuration["OpenAI:ApiKey"];
+var apiKey = Environment.GetEnvironmentVariable("OpenAIApiKey")==null ? builder.Configuration["OpenAI:ApiKey"] : Environment.GetEnvironmentVariable("OpenAIApiKey");
 builder.Services.AddSingleton(new DebateService(apiKey));
 
 
