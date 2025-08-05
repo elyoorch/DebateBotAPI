@@ -19,14 +19,8 @@ namespace DebateBotAPI.web.Controllers
         [Route("message")]
         public async Task<IActionResult> GetMessageResponse([FromBody] DebateRequest request)
         {
-            if (request == null || string.IsNullOrEmpty(request.message))
-            {
-                return BadRequest("Invalid request. 'message' is required.");
-            }
-
             var reply = await _debateService.GetBotReply(request);
             return Ok(reply);
-            //return Ok(new { reply });
         }
     }
 }

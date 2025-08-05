@@ -16,14 +16,18 @@ namespace DebateBotAPI.web.Services
             this._apiClient = new ChatClient("gpt-4.1-nano", apiKey);
         }
 
-        public async Task<string> GetBotReply(DebateRequest request)
+        public async Task<DebateResponse> GetBotReply(DebateRequest request)
         {
+
             string? conversationId = request.conversation_id;
-            
+
             if (string.IsNullOrEmpty(conversationId))
             {
                 conversationId = Guid.NewGuid().ToString();
             }
+
+            //Create the response object
+            DebateResponse _response = new DebateResponse { conversation_id = conversationId };
 
             //Create messages list getting previous messages from file
             List<Models.MessageItem> _listPreviousMessages = Helpers.FileHelper.AppendMessageToConversation(conversationId, new Models.MessageItem
@@ -32,34 +36,10 @@ namespace DebateBotAPI.web.Services
                 message = request.message
             });
 
+            //build messages for the AI, including prompt, previous and current message
+            var messages = Helpers.AIHelper.BuilChatMessages(_listPreviousMessages);
 
-            var messages = new List<ChatMessage>
-            {
-                ChatMessage.CreateSystemMessage(
-                ChatMessageContentPart.CreateTextPart(
-                    $"You are DebateBot. You are debating the topic: 'AI will replace human jobs'." +
-                    "Your position is: 'Against. The AI will not replace human jobs'. Stay on topic retake the conversation, rebut kindly your opponent, and try to persuade them with logic, facts, statisticts and emotional appeal if needed."
-                )
-            )
-            };
-
-            foreach (var msg in _listPreviousMessages)
-            {
-                if (msg.role.ToLower() == "user")
-                {
-                    messages.Add(ChatMessage.CreateUserMessage(
-                        ChatMessageContentPart.CreateTextPart(msg.message)
-                    ));
-                }
-                else if (msg.role.ToLower() == "bot")
-                {
-                    messages.Add(ChatMessage.CreateAssistantMessage(
-                        ChatMessageContentPart.CreateTextPart(msg.message)
-                    ));
-                }
-            }
-
-            ClientResult response = _apiClient.CompleteChat(messages);
+            ClientResult response = await _apiClient.CompleteChatAsync(messages);
             BinaryData botreply = response.GetRawResponse().Content;
 
             using JsonDocument outputAsJson = JsonDocument.Parse(botreply.ToString());
@@ -85,14 +65,10 @@ namespace DebateBotAPI.web.Services
                 {
                     NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
                 });
+                _response.message = _fullchat;
             }
-                
-            return reply;
-            
 
-            //// Get reply
-            //var response = await _apiClient.CompleteChatAsync(messages);
-            //return response.Choices.FirstOrDefault()?.Message?.Content ?? string.Empty;
+            return _response;
         }
     }
 }
