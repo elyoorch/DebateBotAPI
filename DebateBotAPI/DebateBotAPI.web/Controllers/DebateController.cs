@@ -1,5 +1,4 @@
-﻿using DebateBotAPI.Models;
-using DebateBotAPI.web.Models;
+﻿using DebateBotAPI.web.Models;
 using DebateBotAPI.web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +19,14 @@ namespace DebateBotAPI.web.Controllers
         [Route("message")]
         public async Task<IActionResult> GetMessageResponse([FromBody] DebateRequest request)
         {
-            var reply = await _debateService.GetBotReplyAsync(request);
-            return Ok(new { reply });
+            if (request == null || string.IsNullOrEmpty(request.message))
+            {
+                return BadRequest("Invalid request. 'message' is required.");
+            }
+
+            var reply = await _debateService.GetBotReply(request);
+            return Ok(reply);
+            //return Ok(new { reply });
         }
     }
 }
