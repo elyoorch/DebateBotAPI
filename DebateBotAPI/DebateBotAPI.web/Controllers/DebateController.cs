@@ -1,5 +1,4 @@
-﻿using DebateBotAPI.Models;
-using DebateBotAPI.web.Models;
+﻿using DebateBotAPI.web.Models;
 using DebateBotAPI.web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
