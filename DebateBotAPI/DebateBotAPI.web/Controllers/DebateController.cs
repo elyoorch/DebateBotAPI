@@ -20,8 +20,8 @@ namespace DebateBotAPI.web.Controllers
         [Route("message")]
         public async Task<IActionResult> GetMessageResponse([FromBody] DebateRequest request)
         {
-            var reply = await _debateService.GetBotReplyAsync(request);
-            return Ok(new { reply });
+            var reply = await _debateService.GetBotReply(request);
+            return Ok(reply);
         }
     }
 }
